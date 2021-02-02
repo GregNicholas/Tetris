@@ -46,14 +46,77 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   let currentPosition = 4;
-  let current = theTetrominoes[4][3];
 
-  //draw first rotation in first tetromino
+  //randomly select a tetromino and its first position
+  let randomShape = Math.floor(Math.random()*theTetrominoes.length);
+  let randomPosition = Math.floor(Math.random()*theTetrominoes[randomShape].length)
+  let current = theTetrominoes[randomShape][randomPosition];
+
+  //draw the tetromino
   function draw() {
     current.forEach(index => {
       squares[currentPosition + index].classList.add("tetromino");
     });
   }
 
-  draw();
+  //undraw tetromino
+  function undraw() {
+    current.forEach(index => {
+      squares[currentPosition + index].classList.remove('tetromino');
+    });
+  }
+
+  //make tetromino move down every second
+  timerId = setInterval(moveDown, 500);
+
+  //assign functions to keyCodes
+  function control(e) {
+    if(e.keyCode === 37) {
+      moveLeft();
+    } else if (e.keyCode === 38){
+      //rotate()
+    } else if (e.keyCode === 39){
+      //moveRight()
+    } else if (e.keyCode === 40){
+      moveDown()
+    }
+  }
+  document.addEventListener('keyup', control);
+
+  //move down function
+  function moveDown() {
+    undraw();
+    currentPosition += width;
+    draw();
+    freeze();
+  }
+
+  //freeze function
+  function freeze() {
+    if (current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
+      current.forEach(index => squares[currentPosition + index].classList.add('taken'));
+      //start new tetromino falling
+      randomShape = Math.floor(Math.random() * theTetrominoes.length);
+      randomPosition = Math.floor(Math.random()*theTetrominoes[randomShape].length);
+      current = theTetrominoes[randomShape][randomPosition];
+      currentPosition = 4;
+      draw();
+    }
+  }
+
+  //move left, unless at the edge or blockage
+  function moveLeft() {
+    undraw();
+    const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0);
+
+    if(!isAtLeftEdge) currentPosition -= 1;
+
+    if(current.some(index => squares[currentPosition + index].classList.contains('taken'))){
+      currentPosition += 1;
+    }
+    
+    draw();
+  }
+
+
 });
