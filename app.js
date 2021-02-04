@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector(".grid");
   let squares = Array.from(document.querySelectorAll(".grid div"));
-  const ScoreDisplay = document.querySelector("#score");
-  const StartBtn = document.querySelector("#start-button");
+  const scoreDisplay = document.querySelector("#score");
+  const startBtn = document.querySelector("#start-button");
   const width = 10;
   let nextRandom = 0;
+  let timerId;
+  let score = 0;
 
   //tetrominos
   const lTetromino = [
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //make tetromino move down every second
-  timerId = setInterval(moveDown, 1000);
+  //timerId = setInterval(moveDown, 1000);
 
   //assign functions to keyCodes
   function control(e) {
@@ -105,9 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
         squares[currentPosition + index].classList.add("taken")
       );
       //start new tetromino falling
-      random = nextRandom;
+      randomShape = nextRandom;
       nextRandom = Math.floor(Math.random() * theTetrominoes.length);
-      randomShape = Math.floor(Math.random() * theTetrominoes.length);
+      // randomShape = Math.floor(Math.random() * theTetrominoes.length);
       currentRotation = Math.floor(
         Math.random() * theTetrominoes[randomShape].length
       );
@@ -115,6 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPosition = 4;
       draw();
       drawDisplay();
+      addScore();
+      gameOver();
     }
   }
 
@@ -155,6 +159,32 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   };
 
+  //FIX ROTATION OF TETROMINOS A THE EDGE
+  function isAtRight() {
+    return current.some(index => (currentPosition + index + 1) % width === 0);
+  }
+
+  function isAtLeft() {
+    return current.some(index => (currentPosition + index) % width === 0);
+  }
+
+  function checkRotatedPosition(P) {
+    P = P || currentPosition; //get current position.  Then, check if the piece is near the left side.
+    if ((P + 1) % width < 4) {
+      //add 1 because the position index can be 1 less than where the piece is (with how they are indexed).
+      if (isAtRight()) {
+        //use actual position to check if it's flipped over to right side
+        currentPosition += 1; //if so, add one to wrap it back around
+        checkRotatedPosition(P); //check again.  Pass position from start, since long block might need to move more.
+      }
+    } else if (P % width > 5) {
+      if (isAtLeft()) {
+        currentPosition -= 1;
+        checkRotatedPosition(P);
+      }
+    }
+  }
+
   const rotate = () => {
     undraw();
     currentRotation++;
@@ -162,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentRotation = 0;
     }
     current = theTetrominoes[randomShape][currentRotation];
+    checkRotatedPosition();
     draw();
   };
 
@@ -188,6 +219,63 @@ document.addEventListener("DOMContentLoaded", () => {
     upNextTetrominoes[nextRandom].forEach(index => {
       displaySquares[0 + index].classList.add("tetromino");
     });
-    console.log(displaySquares);
   }
+
+  //start/pause button funcionality
+  startBtn.addEventListener("click", () => {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    } else {
+      draw();
+      timerId = setInterval(moveDown, 1000);
+      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+      drawDisplay();
+    }
+  });
+
+  //add score
+  const addScore = () => {
+    for (let i = 0; i < 199; i += width) {
+      const row = [
+        i,
+        i + 1,
+        i + 2,
+        i + 3,
+        i + 4,
+        i + 5,
+        i + 6,
+        i + 7,
+        i + 8,
+        i + 9
+      ];
+
+      if (row.every(index => squares[index].classList.contains("taken"))) {
+        score += 10;
+        scoreDisplay.innerHTML = score;
+        row.forEach(index => {
+          squares[index].classList.remove("taken");
+          squares[index].classList.remove("tetromino");
+        });
+        const squaresRemoved = squares.splice(i, width);
+        squares = squaresRemoved.concat(squares);
+        squares.forEach(cell => grid.appendChild(cell));
+      }
+    }
+  };
+
+  //game over
+  const gameOver = () => {
+    //check if any part of the piece (current array) (its position in the grid(squares))
+    // is occupied by another piece ('taken' class)
+    //if so, stop timerId, update scoreDisplay
+    if (
+      current.some(index =>
+        squares[currentPosition + index].classList.contains("taken")
+      )
+    ) {
+      scoreDisplay.innerHTML = "end";
+      clearInterval(timerId);
+    }
+  };
 });
