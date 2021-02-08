@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let nextRandom = 0;
   let timerId;
   let score = 0;
-  let finished = false;
+  let gameEnd = false;
 
   //tetrominos
   const lTetromino = [
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //assign functions to keyCodes
   function control(e) {
-    if (!finished) {
+    if (!gameEnd) {
       if (e.keyCode === 37) {
         moveLeft();
       } else if (e.keyCode === 38) {
@@ -247,14 +247,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //start/pause button funcionality
   startBtn.addEventListener("click", () => {
-    if (timerId) {
-      clearInterval(timerId);
-      timerId = null;
+    if (!gameEnd) {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      } else {
+        draw();
+        timerId = setInterval(moveDown, 1000);
+        nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+        drawDisplay();
+      }
     } else {
-      draw();
-      timerId = setInterval(moveDown, 1000);
-      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
-      drawDisplay();
+      location.reload();
     }
   });
 
@@ -302,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const end = document.createElement("h1");
       end.innerHTML = "GAME OVER";
       scoreDisplay.appendChild(end);
-      finished = true;
+      gameEnd = true;
     }
   };
 });
