@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let nextRandom = 0;
   let timerId;
   let score = 0;
+  let finished = false;
 
   //tetrominos
   const lTetromino = [
@@ -15,11 +16,23 @@ document.addEventListener("DOMContentLoaded", () => {
     [1, width + 1, width * 2 + 1, width * 2],
     [width, width * 2, width * 2 + 1, width * 2 + 2]
   ];
-  const zTetromino = [
+  const jTetromino = [
+    [1, width + 1, width * 2 + 1, 0],
+    [width, width + 1, width + 2, 2],
+    [1, width + 1, width * 2 + 1, width * 2 + 2],
+    [width, width + 1, width + 2, width * 2]
+  ];
+  const sTetromino = [
     [width + 1, width + 2, width * 2, width * 2 + 1],
     [0, width, width + 1, width * 2 + 1],
     [width + 1, width + 2, width * 2, width * 2 + 1],
     [0, width, width + 1, width * 2 + 1]
+  ];
+  const zTetromino = [
+    [width, width + 1, width * 2 + 1, width * 2 + 2],
+    [1, width, width + 1, width * 2],
+    [width, width + 1, width * 2 + 1, width * 2 + 2],
+    [1, width, width + 1, width * 2]
   ];
   const tTetromino = [
     [1, width, width + 1, width + 2],
@@ -42,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const theTetrominoes = [
     lTetromino,
+    jTetromino,
+    sTetromino,
     zTetromino,
     tTetromino,
     oTetromino,
@@ -76,17 +91,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //assign functions to keyCodes
   function control(e) {
-    if (e.keyCode === 37) {
-      moveLeft();
-    } else if (e.keyCode === 38) {
-      rotate();
-    } else if (e.keyCode === 39) {
-      moveRight();
-    } else if (e.keyCode === 40) {
-      moveDown();
+    if (!finished) {
+      if (e.keyCode === 37) {
+        moveLeft();
+      } else if (e.keyCode === 38) {
+        rotate();
+      } else if (e.keyCode === 39) {
+        moveRight();
+      } else if (e.keyCode === 40) {
+        moveDown();
+      }
     }
   }
-  document.addEventListener("keyup", control);
+  document.addEventListener("keydown", control);
 
   //move down function
   function moveDown() {
@@ -115,9 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       current = theTetrominoes[randomShape][currentRotation];
       currentPosition = 4;
+      addScore();
       draw();
       drawDisplay();
-      addScore();
       gameOver();
     }
   }
@@ -203,7 +220,14 @@ document.addEventListener("DOMContentLoaded", () => {
   //tetrominoes without rotations
   const upNextTetrominoes = [
     [1, displayWidth + 1, displayWidth * 2 + 1, 2], //lTetromino
-    [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //zTetromino
+    [1, displayWidth + 1, displayWidth * 2 + 1, 0], //jTetromino
+    [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //sTetromino
+    [
+      displayWidth,
+      displayWidth + 1,
+      displayWidth * 2 + 1,
+      displayWidth * 2 + 2
+    ], //zTetromino
     [1, displayWidth, displayWidth + 1, displayWidth + 2], //tTetromino
     [0, 1, displayWidth, displayWidth + 1], //oTetromino
     [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] //iTetromino
@@ -274,8 +298,11 @@ document.addEventListener("DOMContentLoaded", () => {
         squares[currentPosition + index].classList.contains("taken")
       )
     ) {
-      scoreDisplay.innerHTML = "end";
       clearInterval(timerId);
+      const end = document.createElement("h1");
+      end.innerHTML = "GAME OVER";
+      scoreDisplay.appendChild(end);
+      finished = true;
     }
   };
 });
