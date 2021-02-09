@@ -2,11 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector(".grid");
   let squares = Array.from(document.querySelectorAll(".grid div"));
   const scoreDisplay = document.querySelector("#score");
+  const levelDisplay = document.querySelector("#level");
   const startBtn = document.querySelector("#start-button");
   const width = 10;
   let nextRandom = 0;
   let timerId;
   let score = 0;
+  let level = 1;
   let gameEnd = false;
 
   //tetrominos
@@ -214,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const displaySquares = document.querySelectorAll(".mini-grid div");
-  const displayWidth = 4;
+  const displayWidth = 8;
   let displayIndex = 0;
 
   //tetrominoes without rotations
@@ -241,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
       square.classList.remove("tetromino");
     });
     upNextTetrominoes[nextRandom].forEach(index => {
-      displaySquares[0 + index].classList.add("tetromino");
+      displaySquares[displayWidth * 2 + 3 + index].classList.add("tetromino");
     });
   }
 
@@ -289,6 +291,47 @@ document.addEventListener("DOMContentLoaded", () => {
         squares = squaresRemoved.concat(squares);
         squares.forEach(cell => grid.appendChild(cell));
       }
+    }
+    if(score > 19 && score < 40){
+      level = 2;
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 800);
+    } else if(score > 39 && score < 51){
+      level = 3;
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 600);
+    } else if(score > 59 && score < 71){
+      level = 4;
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 500);
+    } else if(score > 79 && score < 91){
+      level = 5;
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 400);
+    } else if(score > 99 && score < 111){
+      level = 6;
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 300);
+    } else if(score > 119 && score < 131){
+      level = 7; 
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 200);
+    } else if(score > 139 && score < 151){
+      level = 8;
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 100);
+    } else if(score > 159 && score < 171){
+      level = 9;
+      levelDisplay.innerHTML = level;
+      clearInterval(timerId);
+      timerId = setInterval(moveDown, 50);
     }
   };
 
