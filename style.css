@@ -87,6 +87,54 @@ h3 {
   outline: 8px ridge rgba(245, 243, 243, 0.6);
 }
 
+.gridLvl2 {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: forestgreen;
+}
+
+.gridLvl3 {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(0, 204, 255);
+}
+
+.gridLvl4 {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(249, 65, 255);
+}
+
+.gridLvl5 {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(255, 115, 0);
+}
+
+.gridLvl6 {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(255, 65, 65);
+}
+
+.gridLvl7 {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(0, 0, 0);
+}
+
 .grid div {
   height: 20px;
   width: 20px;
