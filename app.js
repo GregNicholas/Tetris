@@ -4,12 +4,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const scoreDisplay = document.querySelector("#score");
   const levelDisplay = document.querySelector("#level");
   const startBtn = document.querySelector("#start-button");
+  const lvlClasses = [
+    "grid",
+    "gridLvl2",
+    "gridLvl3",
+    "gridLvl4",
+    "gridLvl5",
+    "gridLvl6",
+    "gridLvl7",
+    "gridLvl8"
+  ];
   const width = 10;
   let nextRandom = 0;
   let timerId;
   let score = 0;
   let speed = 1000;
   let gameEnd = false;
+  const sound = document.getElementById("sound");
+  const bgm = document.getElementById("bgm");
 
   //tetrominos
   const lTetromino = [
@@ -253,11 +265,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (timerId) {
         clearInterval(timerId);
         timerId = null;
+        bgm.pause();
       } else {
         draw();
         timerId = setInterval(moveDown, speed);
         nextRandom = Math.floor(Math.random() * theTetrominoes.length);
         drawDisplay();
+        bgm.play();
       }
     } else {
       location.reload();
@@ -274,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
       squares.forEach((square, i) => {
         if (!squares[i].classList.contains("taken")) {
           squares[i].removeAttribute("class");
+          squares[i].classList.remove(...lvlClasses);
           squares[i].classList.add("gridLvl" + level);
         }
       });
@@ -299,6 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ];
 
       if (row.every(index => squares[index].classList.contains("taken"))) {
+        let soundFlag = true;
         score += 10;
         scoreDisplay.innerHTML = score;
         row.forEach(index => {
@@ -308,6 +324,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const squaresRemoved = squares.splice(i, width);
         squares = squaresRemoved.concat(squares);
         squares.forEach(cell => grid.appendChild(cell));
+        //play sound
+        if (soundFlag) {
+          sound.pause();
+          sound.currentTime = 0;
+          sound.play();
+          soundFlag = false;
+        }
         if (score > 19 && score < 40) {
           levelUp(2);
         } else if (score > 39 && score < 51) {
@@ -344,6 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
       end.innerHTML = "GAME OVER";
       scoreDisplay.appendChild(end);
       gameEnd = true;
+      bgm.pause();
     }
   };
 });
