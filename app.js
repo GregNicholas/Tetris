@@ -292,42 +292,66 @@ document.addEventListener("DOMContentLoaded", () => {
         squares.forEach(cell => grid.appendChild(cell));
       }
     }
-    if(score > 19 && score < 40){
+    if (score > 19 && score < 40) {
       level = 2;
       levelDisplay.innerHTML = level;
+      squares.forEach((square, i) => {
+        squares[i].classList.remove("grid");
+        squares[i].classList.add("gridLvl2");
+      });
       clearInterval(timerId);
       timerId = setInterval(moveDown, 800);
-    } else if(score > 39 && score < 51){
+    } else if (score > 39 && score < 51) {
       level = 3;
       levelDisplay.innerHTML = level;
       clearInterval(timerId);
       timerId = setInterval(moveDown, 600);
-    } else if(score > 59 && score < 71){
+      squares.forEach((square, i) => {
+        squares[i].classList.remove("grid", "gridLvl2");
+        squares[i].classList.add("gridLvl3");
+      });
+    } else if (score > 59 && score < 71) {
       level = 4;
       levelDisplay.innerHTML = level;
       clearInterval(timerId);
       timerId = setInterval(moveDown, 500);
-    } else if(score > 79 && score < 91){
+      squares.forEach((square, i) => {
+        squares[i].classList.remove("gridLvl2", "gridLvl3");
+        squares[i].classList.add("gridLvl4");
+      });
+    } else if (score > 79 && score < 91) {
       level = 5;
       levelDisplay.innerHTML = level;
       clearInterval(timerId);
       timerId = setInterval(moveDown, 400);
-    } else if(score > 99 && score < 111){
+      squares.forEach((square, i) => {
+        squares[i].classList.remove("gridLvl3", "gridLvl4");
+        squares[i].classList.add("gridLvl5");
+      });
+    } else if (score > 99 && score < 111) {
       level = 6;
       levelDisplay.innerHTML = level;
       clearInterval(timerId);
       timerId = setInterval(moveDown, 300);
-    } else if(score > 119 && score < 131){
-      level = 7; 
+      squares.forEach((square, i) => {
+        squares[i].classList.remove("gridLvl4", "gridLvl5");
+        squares[i].classList.add("gridLvl6");
+      });
+    } else if (score > 119 && score < 131) {
+      level = 7;
       levelDisplay.innerHTML = level;
       clearInterval(timerId);
       timerId = setInterval(moveDown, 200);
-    } else if(score > 139 && score < 151){
+      squares.forEach((square, i) => {
+        squares[i].classList.remove("gridLvl5", "gridLvl6");
+        squares[i].classList.add("gridLvl7");
+      });
+    } else if (score > 139 && score < 151) {
       level = 8;
       levelDisplay.innerHTML = level;
       clearInterval(timerId);
       timerId = setInterval(moveDown, 100);
-    } else if(score > 159 && score < 171){
+    } else if (score > 159 && score < 171) {
       level = 9;
       levelDisplay.innerHTML = level;
       clearInterval(timerId);
