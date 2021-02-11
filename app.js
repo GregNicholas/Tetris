@@ -216,15 +216,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // so pieces don't join together when rotated near existing blocks
+  const isOverlap = () => {
+    if (
+      current.some(index =>
+        squares[currentPosition + index].classList.contains("taken")
+      )
+    ) {
+      return true;
+    } else return false;
+  };
+
   const rotate = () => {
     undraw();
+    let prevRotation = currentRotation;
     currentRotation++;
     if (currentRotation === current.length) {
       currentRotation = 0;
     }
     current = theTetrominoes[randomShape][currentRotation];
-    checkRotatedPosition();
-    draw();
+    if (isOverlap()) {
+      currentRotation = prevRotation;
+      current = theTetrominoes[randomShape][currentRotation];
+      draw();
+    } else {
+      checkRotatedPosition();
+      draw();
+    }
   };
 
   const displaySquares = document.querySelectorAll(".mini-grid div");
@@ -283,18 +301,17 @@ document.addEventListener("DOMContentLoaded", () => {
       //so the speed doesn't accellerate when rows cleared simultaneously
       speed -= 100;
       console.log(speed);
-
-      levelDisplay.innerHTML = level;
-      squares.forEach((square, i) => {
-        if (!squares[i].classList.contains("taken")) {
-          squares[i].removeAttribute("class");
-          squares[i].classList.remove(...lvlClasses);
-          squares[i].classList.add("gridLvl" + level);
-        }
-      });
-      clearInterval(timerId);
-      timerId = setInterval(moveDown, speed);
     }
+    levelDisplay.innerHTML = level;
+    squares.forEach((square, i) => {
+      if (!squares[i].classList.contains("taken")) {
+        squares[i].removeAttribute("class");
+        squares[i].classList.remove(...lvlClasses);
+        squares[i].classList.add("gridLvl" + level);
+      }
+    });
+    clearInterval(timerId);
+    timerId = setInterval(moveDown, speed);
   };
 
   //add score
