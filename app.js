@@ -24,11 +24,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const sound = document.getElementById("sound");
   const bitQuest = document.getElementById("bitQuest");
   const classicT = document.getElementById("classicT");
+  const piano = document.getElementById("piano");
 
   const levelMusic = {
     1: classicT,
-    2: bitQuest
+    2: classicT,
+    3: bitQuest,
+    4: bitQuest,
+    5: piano,
+    6: piano,
+    7: classicT,
+    8: classicT,
+    9: classicT,
+    10: classicT
   };
+  for (let song in levelMusic) {
+    levelMusic[song].loop = true;
+  }
+
   //tetrominos
   const lTetromino = [
     [1, width + 1, width * 2 + 1, 2],
@@ -176,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPosition += 1;
     }
     draw();
+    freeze();
   }
 
   const moveRight = () => {
@@ -194,6 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPosition -= 1;
     }
     draw();
+    freeze();
   };
 
   //FIX ROTATION OF TETROMINOS A THE EDGE
@@ -245,9 +260,11 @@ document.addEventListener("DOMContentLoaded", () => {
       currentRotation = prevRotation;
       current = theTetrominoes[randomShape][currentRotation];
       draw();
+      freeze();
     } else {
       checkRotatedPosition();
       draw();
+      freeze();
     }
   };
 
@@ -289,13 +306,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (timerId) {
         clearInterval(timerId);
         timerId = null;
-        levelMusic.level.pause();
+        levelMusic[level].pause();
       } else {
         draw();
         timerId = setInterval(moveDown, speed);
         nextRandom = Math.floor(Math.random() * theTetrominoes.length);
         drawDisplay();
-        levelMusic.level.play();
+        levelMusic[level].play();
       }
     } else {
       location.reload();
@@ -306,7 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (level > levelDisplay.innerHTML) {
       //so the speed doesn't accellerate when rows cleared simultaneously
       speed -= 100;
-      console.log(speed);
     }
     levelDisplay.innerHTML = level;
     squares.forEach((square, i) => {
@@ -318,6 +334,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     clearInterval(timerId);
     timerId = setInterval(moveDown, speed);
+    levelMusic[level - 1].pause();
+    levelMusic[level].play();
   };
 
   //add score
@@ -398,7 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
       end.innerHTML = "GAME OVER";
       scoreDisplay.appendChild(end);
       gameEnd = true;
-      levelMusic.level.pause();
+      levelMusic[level].pause();
     }
   };
 });
