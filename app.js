@@ -17,12 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const width = 10;
   let nextRandom = 0;
   let timerId;
+  let level = 1;
   let score = 0;
   let speed = 1000;
   let gameEnd = false;
   const sound = document.getElementById("sound");
-  const bgm = document.getElementById("bgm");
+  const bitQuest = document.getElementById("bitQuest");
+  const classicT = document.getElementById("classicT");
 
+  const levelMusic = {
+    1: classicT,
+    2: bitQuest
+  };
   //tetrominos
   const lTetromino = [
     [1, width + 1, width * 2 + 1, 2],
@@ -283,20 +289,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (timerId) {
         clearInterval(timerId);
         timerId = null;
-        bgm.pause();
+        levelMusic.level.pause();
       } else {
         draw();
         timerId = setInterval(moveDown, speed);
         nextRandom = Math.floor(Math.random() * theTetrominoes.length);
         drawDisplay();
-        bgm.play();
+        levelMusic.level.play();
       }
     } else {
       location.reload();
     }
   });
 
-  const levelUp = level => {
+  const levelUp = () => {
     if (level > levelDisplay.innerHTML) {
       //so the speed doesn't accellerate when rows cleared simultaneously
       speed -= 100;
@@ -349,21 +355,29 @@ document.addEventListener("DOMContentLoaded", () => {
           soundFlag = false;
         }
         if (score > 19 && score < 40) {
-          levelUp(2);
+          level = 2;
+          levelUp();
         } else if (score > 39 && score < 51) {
-          levelUp(3);
+          level = 3;
+          levelUp();
         } else if (score > 59 && score < 71) {
-          levelUp(4);
+          level = 4;
+          levelUp();
         } else if (score > 79 && score < 91) {
-          levelUp(5);
+          level = 5;
+          levelUp();
         } else if (score > 99 && score < 111) {
-          levelUp(6);
+          level = 6;
+          levelUp();
         } else if (score > 119 && score < 131) {
-          levelUp(7);
+          level = 7;
+          levelUp();
         } else if (score > 139 && score < 151) {
-          levelUp(8);
+          level = 8;
+          levelUp();
         } else if (score > 159 && score < 171) {
-          levelUp(9);
+          level = 9;
+          levelUp();
         }
       }
     }
@@ -384,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
       end.innerHTML = "GAME OVER";
       scoreDisplay.appendChild(end);
       gameEnd = true;
-      bgm.pause();
+      levelMusic.level.pause();
     }
   };
 });
