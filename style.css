@@ -82,7 +82,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   background-color: rebeccapurple;
-  outline: 8px ridge rgba(245, 243, 243, 0.6);
+  outline: 8px ridge rgba(245, 243, 243, 0.8);
 }
 
 .gridLvl2 {
