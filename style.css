@@ -82,7 +82,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   background-color: rebeccapurple;
-  outline: 8px ridge rgba(245, 243, 243, 0.8);
+  outline: 8px ridge rgba(245, 243, 243, 0.6);
 }
 
 .gridLvl2 {
@@ -159,13 +159,48 @@ h3 {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
 }
 
+.lTetromino {
+  background-color: orange;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.jTetromino {
+  background-color: red;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.sTetromino {
+  background-color: pink;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.zTetromino {
+  background-color: forestgreen;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.tTetromino {
+  background-color: royalblue;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.oTetromino {
+  background-color: lime;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.iTetromino {
+  background-color: cyan;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
 .mini-grid {
   margin-left: 50px;
   width: 160px;
   height: 160px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rebeccapurple;
+  background-color: rgb(175, 175, 175);
   outline: 8px ridge rgba(245, 243, 243, 0.8);
 }
 
