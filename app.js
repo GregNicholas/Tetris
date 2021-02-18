@@ -15,12 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
     "gridLvl8"
   ];
   const width = 10;
-  let nextRandom = 0;
   let timerId;
   let level = 1;
   let score = 0;
   let speed = 1000;
   let gameEnd = false;
+  const colors = ["orange", "red", "pink", "green", "blue", "lime", "cyan"];
   const sound = document.getElementById("sound");
   const bitQuest = document.getElementById("bitQuest");
   const classicT = document.getElementById("classicT");
@@ -86,36 +86,61 @@ document.addEventListener("DOMContentLoaded", () => {
     [width, width + 1, width + 2, width + 3]
   ];
 
-  const theTetrominoes = [
-    lTetromino,
-    jTetromino,
-    sTetromino,
-    zTetromino,
-    tTetromino,
-    oTetromino,
-    iTetromino
-  ];
+  const theTetrominoes = {
+    lTetromino: lTetromino,
+    jTetromino: jTetromino,
+    sTetromino: sTetromino,
+    zTetromino: zTetromino,
+    tTetromino: tTetromino,
+    oTetromino: oTetromino,
+    iTetromino: iTetromino
+  };
+
+  // const theTetrominoes = [
+  //   lTetromino,
+  //   jTetromino,
+  //   sTetromino,
+  //   zTetromino,
+  //   tTetromino,
+  //   oTetromino,
+  //   iTetromino
+  // ];
 
   let currentPosition = 4;
 
   //randomly select a tetromino and its first position
-  let randomShape = Math.floor(Math.random() * theTetrominoes.length);
+  const keys = Object.keys(theTetrominoes);
+  let randomShape = keys[(keys.length * Math.random()) << 0];
+  let nextRandom = keys[(keys.length * Math.random()) << 0];
+  console.log("nextRandom: ", nextRandom);
+  //let randomShape = Math.floor(Math.random() * theTetrominoes.length);
+  console.log(randomShape, theTetrominoes[randomShape]);
   let currentRotation = Math.floor(
     Math.random() * theTetrominoes[randomShape].length
   );
   let current = theTetrominoes[randomShape][currentRotation];
+  console.log(randomShape, currentRotation);
+  console.log(current);
 
   //draw the tetromino
   function draw() {
     current.forEach(index => {
-      squares[currentPosition + index].classList.add("tetromino");
+      squares[currentPosition + index].classList.add(randomShape);
     });
   }
 
   //undraw tetromino
   function undraw() {
     current.forEach(index => {
-      squares[currentPosition + index].classList.remove("tetromino");
+      squares[currentPosition + index].classList.remove(
+        "lTetromino",
+        "jTetromino",
+        "sTetromino",
+        "zTetromino",
+        "tTetromino",
+        "oTetromino",
+        "iTetromino"
+      );
     });
   }
 
@@ -158,8 +183,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       //start new tetromino falling
       randomShape = nextRandom;
-      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
-      // randomShape = Math.floor(Math.random() * theTetrominoes.length);
+      const keys = Object.keys(theTetrominoes);
+      nextRandom = keys[(keys.length * Math.random()) << 0];
+      //nextRandom = Math.floor(Math.random() * theTetrominoes.length);
       currentRotation = Math.floor(
         Math.random() * theTetrominoes[randomShape].length
       );
@@ -273,30 +299,45 @@ document.addEventListener("DOMContentLoaded", () => {
   let displayIndex = 0;
 
   //tetrominoes without rotations
-  const upNextTetrominoes = [
-    [1, displayWidth + 1, displayWidth * 2 + 1, 2], //lTetromino
-    [1, displayWidth + 1, displayWidth * 2 + 1, 0], //jTetromino
-    [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //sTetromino
-    [
+  const upNextTetrominoes = {
+    lTetromino: [1, displayWidth + 1, displayWidth * 2 + 1, 2], //lTetromino
+    jTetromino: [1, displayWidth + 1, displayWidth * 2 + 1, 0], //jTetromino
+    sTetromino: [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //sTetromino
+    zTetromino: [
       displayWidth,
       displayWidth + 1,
       displayWidth * 2 + 1,
       displayWidth * 2 + 2
     ], //zTetromino
-    [1, displayWidth, displayWidth + 1, displayWidth + 2], //tTetromino
-    [0, 1, displayWidth, displayWidth + 1], //oTetromino
-    [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] //iTetromino
-  ];
+    tTetromino: [1, displayWidth, displayWidth + 1, displayWidth + 2], //tTetromino
+    oTetromino: [0, 1, displayWidth, displayWidth + 1], //oTetromino
+    iTetromino: [
+      1,
+      displayWidth + 1,
+      displayWidth * 2 + 1,
+      displayWidth * 3 + 1
+    ] //iTetromino
+  };
 
   //display next tetromino in mini grid
   //draw the tetromino
   function drawDisplay() {
     //clear grid
     displaySquares.forEach(square => {
-      square.classList.remove("tetromino");
+      square.classList.remove(
+        "lTetromino",
+        "jTetromino",
+        "sTetromino",
+        "zTetromino",
+        "tTetromino",
+        "oTetromino",
+        "iTetromino"
+      );
     });
+
+    console.log("nextRandom: ", nextRandom);
     upNextTetrominoes[nextRandom].forEach(index => {
-      displaySquares[displayWidth * 2 + 3 + index].classList.add("tetromino");
+      displaySquares[displayWidth * 2 + 3 + index].classList.add(nextRandom);
     });
   }
 
@@ -310,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         draw();
         timerId = setInterval(moveDown, speed);
-        nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+        nextRandom = keys[(keys.length * Math.random()) << 0];
         drawDisplay();
         levelMusic[level].play();
       }
@@ -365,6 +406,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const squaresRemoved = squares.splice(i, width);
         squares = squaresRemoved.concat(squares);
         squares.forEach(cell => grid.appendChild(cell));
+        squares.forEach(s => {
+          if (s.classList.contains("taken")) {
+          } else {
+            s.className = "";
+          }
+        });
         //play sound
         if (soundFlag) {
           sound.pause();
