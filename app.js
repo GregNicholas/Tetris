@@ -440,8 +440,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (score > 139 && score < 151) {
           level = 8;
           levelUp();
-        } else if (score > 159 && score < 171) {
+        } else if (score > 159 && score < 191) {
           level = 9;
+          levelUp();
+        } else if (score > 199 && score < 211) {
+          level = 10;
           levelUp();
         }
       }
