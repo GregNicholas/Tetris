@@ -19,8 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let level = 1;
   let score = 0;
   let speed = 1000;
+  let holdCurrent = false;
+  let pieceHeld = false;
   let gameEnd = false;
-  const colors = ["orange", "red", "pink", "green", "blue", "lime", "cyan"];
+  //const colors = ["orange", "red", "pink", "green", "blue", "lime", "cyan"];
   const sound = document.getElementById("sound");
   const bitQuest = document.getElementById("bitQuest");
   const classicT = document.getElementById("classicT");
@@ -111,16 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
   //randomly select a tetromino and its first position
   const keys = Object.keys(theTetrominoes);
   let randomShape = keys[(keys.length * Math.random()) << 0];
+  let onDeck = keys[(keys.length * Math.random()) << 0];
+  let inTheHole = keys[(keys.length * Math.random()) << 0];
   let nextRandom = keys[(keys.length * Math.random()) << 0];
-  console.log("nextRandom: ", nextRandom);
+  let heldShape;
   //let randomShape = Math.floor(Math.random() * theTetrominoes.length);
   console.log(randomShape, theTetrominoes[randomShape]);
   let currentRotation = Math.floor(
     Math.random() * theTetrominoes[randomShape].length
   );
   let current = theTetrominoes[randomShape][currentRotation];
-  console.log(randomShape, currentRotation);
-  console.log(current);
 
   //draw the tetromino
   function draw() {
@@ -158,6 +160,10 @@ document.addEventListener("DOMContentLoaded", () => {
         moveRight();
       } else if (e.keyCode === 40) {
         moveDown();
+      } else if (e.keyCode === 16) {
+        holdPiece();
+      } else if (e.keyCode === 13) {
+        swapHold();
       }
     }
   }
@@ -171,30 +177,57 @@ document.addEventListener("DOMContentLoaded", () => {
     freeze();
   }
 
+  function holdPiece() {
+    holdCurrent = true;
+    if (heldShape) {
+      let temp = heldShape;
+      heldShape = randomShape;
+      randomShape = temp;
+    } else {
+      heldShape = randomShape;
+      randomShape = onDeck;
+      onDeck = inTheHole;
+      inTheHole = nextRandom;
+    }
+    undraw();
+    drawHoldDisplay();
+    freeze();
+  }
+
   //freeze function
   function freeze() {
     if (
       current.some(index =>
         squares[currentPosition + index + width].classList.contains("taken")
-      )
+      ) ||
+      holdCurrent === true
     ) {
-      current.forEach(index =>
-        squares[currentPosition + index].classList.add("taken")
-      );
+      if (!holdCurrent) {
+        current.forEach(index =>
+          squares[currentPosition + index].classList.add("taken")
+        );
+      }
       //start new tetromino falling
-      randomShape = nextRandom;
-      const keys = Object.keys(theTetrominoes);
-      nextRandom = keys[(keys.length * Math.random()) << 0];
-      //nextRandom = Math.floor(Math.random() * theTetrominoes.length);
-      currentRotation = Math.floor(
-        Math.random() * theTetrominoes[randomShape].length
-      );
+      if (!holdCurrent) {
+        randomShape = onDeck;
+        onDeck = inTheHole;
+        inTheHole = nextRandom;
+        const keys = Object.keys(theTetrominoes);
+        nextRandom = keys[(keys.length * Math.random()) << 0];
+        //nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+        currentRotation = Math.floor(
+          Math.random() * theTetrominoes[randomShape].length
+        );
+        currentPosition = 4;
+      }
+
       current = theTetrominoes[randomShape][currentRotation];
-      currentPosition = 4;
+
       addScore();
       draw();
       drawDisplay();
       gameOver();
+      holdCurrent = false;
     }
   }
 
@@ -295,8 +328,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const displaySquares = document.querySelectorAll(".mini-grid div");
-  const displayWidth = 8;
+  const displayWidth = 7;
   let displayIndex = 0;
+  const holdSquares = document.querySelectorAll(".hold-grid div");
 
   //tetrominoes without rotations
   const upNextTetrominoes = {
@@ -320,7 +354,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //display next tetromino in mini grid
-  //draw the tetromino
   function drawDisplay() {
     //clear grid
     displaySquares.forEach(square => {
@@ -334,14 +367,38 @@ document.addEventListener("DOMContentLoaded", () => {
         "iTetromino"
       );
     });
-
-    console.log("nextRandom: ", nextRandom);
+    upNextTetrominoes[onDeck].forEach(index => {
+      displaySquares[displayWidth + 2 + index].classList.add(onDeck);
+    });
+    upNextTetrominoes[inTheHole].forEach(index => {
+      displaySquares[displayWidth * 6 + 2 + index].classList.add(inTheHole);
+    });
     upNextTetrominoes[nextRandom].forEach(index => {
-      displaySquares[displayWidth * 2 + 3 + index].classList.add(nextRandom);
+      displaySquares[displayWidth * 11 + 2 + index].classList.add(nextRandom);
     });
   }
 
-  //start/pause button funcionality
+  //display current in hold grid
+  function drawHoldDisplay() {
+    //clear grid
+    holdSquares.forEach(square => {
+      square.classList.remove(
+        "lTetromino",
+        "jTetromino",
+        "sTetromino",
+        "zTetromino",
+        "tTetromino",
+        "oTetromino",
+        "iTetromino"
+      );
+    });
+
+    upNextTetrominoes[heldShape].forEach(index => {
+      holdSquares[displayWidth * 2 + 2 + index].classList.add(heldShape);
+    });
+  }
+
+  //start/pause button functionality
   startBtn.addEventListener("click", () => {
     if (!gameEnd) {
       if (timerId) {
@@ -352,6 +409,8 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
         timerId = setInterval(moveDown, speed);
         nextRandom = keys[(keys.length * Math.random()) << 0];
+        inTheHole = keys[(keys.length * Math.random()) << 0];
+        onDeck = keys[(keys.length * Math.random()) << 0];
         drawDisplay();
         levelMusic[level].play();
       }
