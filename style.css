@@ -83,7 +83,8 @@ div.taken {
   padding: 5px;
   background: whitesmoke;
   box-shadow: 0 0 0 5px rgba(245, 243, 243, 0.8); */
-  outline: 8px ridge rgba(245, 243, 243, 0.8);
+  padding: 5px;
+  outline: 8px ridge rgba(100, 255, 53, 0.8);
   background: whitesmoke;
   font-size: 10pt;
   font-family: "Press Start 2p";
@@ -109,7 +110,7 @@ div.taken {
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(175, 175, 175);
-  outline: 8px ridge rgba(245, 243, 243, 0.8);
+  outline: 8px ridge rgba(100, 255, 53, 0.8);
 }
 
 .gridLvl2 {
@@ -237,7 +238,7 @@ div.taken {
   display: flex;
   flex-wrap: wrap;
   background-color: whitesmoke;
-  outline: 8px ridge rgba(245, 243, 243, 0.733);
+  outline: 8px ridge rgba(100, 255, 53, 0.8);
   margin-bottom: 20px;
 }
 
@@ -253,7 +254,7 @@ div.taken {
   display: flex;
   flex-wrap: wrap;
   background-color: whitesmoke;
-  outline: 8px ridge rgba(245, 243, 243, 0.733);
+  outline: 8px ridge rgba(100, 255, 53, 0.8);
   margin-bottom: 20px;
 }
 
