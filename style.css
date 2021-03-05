@@ -26,11 +26,6 @@ h3 {
   cursor: pointer;
 }
 
-p {
-  display: flex;
-  justify-content: center;
-}
-
 #content_container {
   float: left;
   width: 100%;
@@ -40,10 +35,6 @@ p {
   display: flex;
   flex-direction: column;
   margin-right: 100px;
-}
-
-.grid div {
-  outline: 1px solid silver;
 }
 
 div.taken {
@@ -86,19 +77,17 @@ div.taken {
   cursor: pointer;
 }
 
+.label {
+  font-size: 12pt;
+  font-family: "Press Start 2p";
+  justify-content: left;
+  margin-left: 50px;
+}
+
 .container {
   display: flex;
   justify-content: center;
 }
-
-/* .center-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-} */
 
 .grid {
   width: 200px;
@@ -184,6 +173,7 @@ div.taken {
 .grid div {
   height: 20px;
   width: 20px;
+  /* outline: 1px solid silver; */
 }
 
 .tetromino {
@@ -228,8 +218,8 @@ div.taken {
 
 .mini-grid {
   margin-left: 50px;
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 320px;
   display: flex;
   flex-wrap: wrap;
   background-color: whitesmoke;
@@ -238,6 +228,27 @@ div.taken {
 }
 
 .mini-grid div {
+  width: 20px;
+  height: 20px;
+}
+
+.hold-grid {
+  margin-right: 50px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: whitesmoke;
+  outline: 8px ridge rgba(245, 243, 243, 0.733);
+  margin-bottom: 20px;
+}
+
+.hold-grid div {
+  width: 20px;
+  height: 20px;
+}
+
+.upNext-grid div {
   width: 20px;
   height: 20px;
 }
