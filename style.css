@@ -77,9 +77,23 @@ div.taken {
   cursor: pointer;
 }
 
+#controls {
+  /* border-radius: 8px;
+  border: 5px solid hsl(0, 0%, 40%);
+  padding: 5px;
+  background: whitesmoke;
+  box-shadow: 0 0 0 5px rgba(245, 243, 243, 0.8); */
+  outline: 8px ridge rgba(245, 243, 243, 0.8);
+  background: whitesmoke;
+  font-size: 10pt;
+  font-family: "Press Start 2p";
+  margin-right: 20px;
+}
+
 .label {
   font-size: 12pt;
   font-family: "Press Start 2p";
+  color: rgb(252, 62, 62);
   justify-content: left;
   margin-left: 50px;
 }
