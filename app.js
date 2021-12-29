@@ -98,16 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
     iTetromino: iTetromino
   };
 
-  // const theTetrominoes = [
-  //   lTetromino,
-  //   jTetromino,
-  //   sTetromino,
-  //   zTetromino,
-  //   tTetromino,
-  //   oTetromino,
-  //   iTetromino
-  // ];
-
   let currentPosition = 4;
 
   //randomly select a tetromino and its first position
