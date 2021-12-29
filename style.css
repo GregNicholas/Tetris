@@ -26,6 +26,21 @@ h3 {
   cursor: pointer;
 }
 
+#content_container {
+  float: left;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-right: 100px;
+}
+
+div.taken {
+  outline: none;
+}
+
 .game-info {
   justify-content: center;
   align-items: center;
@@ -62,27 +77,40 @@ h3 {
   cursor: pointer;
 }
 
+#controls {
+  /* border-radius: 8px;
+  border: 5px solid hsl(0, 0%, 40%);
+  padding: 5px;
+  background: whitesmoke;
+  box-shadow: 0 0 0 5px rgba(245, 243, 243, 0.8); */
+  padding: 5px;
+  outline: 8px ridge rgb(100, 255, 53);
+  background: whitesmoke;
+  font-size: 10pt;
+  font-family: "Press Start 2p";
+  margin-right: 20px;
+}
+
+.label {
+  font-size: 12pt;
+  font-family: "Press Start 2p";
+  color: rgb(252, 62, 62);
+  justify-content: left;
+  margin-left: 50px;
+}
+
 .container {
   display: flex;
   justify-content: center;
 }
-
-/* .center-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-} */
 
 .grid {
   width: 200px;
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rebeccapurple;
-  outline: 8px ridge rgba(245, 243, 243, 0.8);
+  background-color: rgb(175, 175, 175);
+  outline: 8px ridge rgb(100, 255, 53);
 }
 
 .gridLvl2 {
@@ -90,7 +118,7 @@ h3 {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: forestgreen;
+  background-color: rgb(154, 199, 154);
 }
 
 .gridLvl3 {
@@ -98,7 +126,7 @@ h3 {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(0, 204, 255);
+  background-color: rgb(166, 237, 255);
 }
 
 .gridLvl4 {
@@ -106,7 +134,7 @@ h3 {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(249, 65, 255);
+  background-color: rgb(255, 236, 255);
 }
 
 .gridLvl5 {
@@ -114,7 +142,7 @@ h3 {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(255, 115, 0);
+  background-color: rgb(255, 219, 189);
 }
 
 .gridLvl6 {
@@ -122,7 +150,7 @@ h3 {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(255, 65, 65);
+  background-color: rgb(255, 193, 193);
 }
 
 .gridLvl7 {
@@ -130,7 +158,7 @@ h3 {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(114, 114, 114);
 }
 
 .gridLvl8 {
@@ -138,7 +166,7 @@ h3 {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgb(0, 0, 0);
+  background-color: whitesmoke;
 }
 
 .gridLvl9 {
@@ -149,9 +177,18 @@ h3 {
   background-color: rgb(0, 0, 0);
 }
 
+.gridLvl10 {
+  width: 200px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(255, 255, 255);
+}
+
 .grid div {
   height: 20px;
   width: 20px;
+  /* outline: 1px solid silver; */
 }
 
 .tetromino {
@@ -159,17 +196,74 @@ h3 {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
 }
 
+.lTetromino {
+  background-color: rgb(255, 145, 0);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.jTetromino {
+  background-color: crimson;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.sTetromino {
+  background-color: hotpink;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.zTetromino {
+  background-color: forestgreen;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.tTetromino {
+  background-color: royalblue;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.oTetromino {
+  background-color: lime;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.iTetromino {
+  background-color: rgb(0, 225, 255);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
 .mini-grid {
   margin-left: 50px;
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 320px;
   display: flex;
   flex-wrap: wrap;
-  background-color: rebeccapurple;
-  outline: 8px ridge rgba(245, 243, 243, 0.8);
+  background-color: whitesmoke;
+  outline: 8px ridge rgb(100, 255, 53);
+  margin-bottom: 20px;
 }
 
 .mini-grid div {
+  width: 20px;
+  height: 20px;
+}
+
+.hold-grid {
+  margin-right: 50px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: whitesmoke;
+  outline: 8px ridge rgba(100, 255, 53, 0.8);
+  margin-bottom: 20px;
+}
+
+.hold-grid div {
+  width: 20px;
+  height: 20px;
+}
+
+.upNext-grid div {
   width: 20px;
   height: 20px;
 }
