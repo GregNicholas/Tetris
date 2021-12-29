@@ -28,6 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const classicT = document.getElementById("classicT");
   const piano = document.getElementById("piano");
 
+  sound.volume = 0.2;
+  classicT.volume = 0.2;
+  bitQuest.volume = 0.2;
+  piano.volume = 0.2;
+
   const levelMusic = {
     1: classicT,
     2: classicT,
@@ -152,20 +157,22 @@ document.addEventListener("DOMContentLoaded", () => {
   //assign functions to keyCodes
   function control(e) {
     if (!gameEnd) {
-      if (e.keyCode === 37) {
-        moveLeft();
-      } else if (e.keyCode === 38) {
-        rotate();
-      } else if (e.keyCode === 39) {
-        moveRight();
-      } else if (e.keyCode === 40) {
-        moveDown();
-      } else if (e.keyCode === 16) {
-        holdPiece();
-      } else if (e.keyCode === 13) {
-        swapHold();
-      } else if (e.keyCode === 32) {
-        quickDrop();
+      if (timerId) {
+        if (e.keyCode === 37) {
+          if (timerId) { moveLeft(); }
+        } else if (e.keyCode === 38) {
+          rotate();
+        } else if (e.keyCode === 39) {
+          moveRight();
+        } else if (e.keyCode === 40) {
+          moveDown();
+        } else if (e.keyCode === 16) {
+          holdPiece();
+        } else if (e.keyCode === 13) {
+          swapHold();
+        } else if (e.keyCode === 32) {
+          quickDrop();
+        }
       }
     }
   }
@@ -409,7 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //start/pause button functionality
-  startBtn.addEventListener("click", () => {
+  startBtn.addEventListener("mousedown", () => {
     if (!gameEnd) {
       if (timerId) {
         clearInterval(timerId);
