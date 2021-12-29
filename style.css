@@ -110,7 +110,7 @@ div.taken {
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(175, 175, 175);
-  outline: 8px ridge magenta;
+  outline: 8px ridge rgb(100, 255, 53);
 }
 
 .gridLvl2 {
