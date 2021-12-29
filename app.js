@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     4: bitQuest,
     5: piano,
     6: piano,
-    7: classicT,
+    7: piano,
     8: classicT,
     9: classicT,
     10: classicT
