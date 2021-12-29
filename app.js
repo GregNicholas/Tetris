@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let score = 0;
   let speed = 1000;
   let holdCurrent = false;
-  let pieceHeld = false;
+  let pieceCount = 0;
   let gameEnd = false;
   //const colors = ["orange", "red", "pink", "green", "blue", "lime", "cyan"];
   const sound = document.getElementById("sound");
@@ -164,6 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
         holdPiece();
       } else if (e.keyCode === 13) {
         swapHold();
+      } else if (e.keyCode === 32) {
+        quickDrop();
       }
     }
   }
@@ -175,6 +177,13 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPosition += width;
     draw();
     freeze();
+  }
+
+  function quickDrop() {
+    let cur = pieceCount;
+    while (cur === pieceCount) {
+      moveDown();
+    }
   }
 
   function holdPiece() {
@@ -209,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       //start new tetromino falling
       if (!holdCurrent) {
+        pieceCount++;
         randomShape = onDeck;
         onDeck = inTheHole;
         inTheHole = nextRandom;
@@ -456,7 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (row.every(index => squares[index].classList.contains("taken"))) {
         let soundFlag = true;
-        score += 10;
+        score += 100;
         scoreDisplay.innerHTML = score;
         row.forEach(index => {
           squares[index].classList.remove("taken");
@@ -478,31 +488,31 @@ document.addEventListener("DOMContentLoaded", () => {
           sound.play();
           soundFlag = false;
         }
-        if (score > 19 && score < 40) {
+        if (score > 199 && score < 400) {
           level = 2;
           levelUp();
-        } else if (score > 39 && score < 51) {
+        } else if (score > 399 && score < 510) {
           level = 3;
           levelUp();
-        } else if (score > 59 && score < 71) {
+        } else if (score > 599 && score < 710) {
           level = 4;
           levelUp();
-        } else if (score > 79 && score < 91) {
+        } else if (score > 799 && score < 910) {
           level = 5;
           levelUp();
-        } else if (score > 99 && score < 111) {
+        } else if (score > 999 && score < 1100) {
           level = 6;
           levelUp();
-        } else if (score > 119 && score < 131) {
+        } else if (score > 1199 && score < 1390) {
           level = 7;
           levelUp();
-        } else if (score > 139 && score < 151) {
+        } else if (score > 1399 && score < 1500) {
           level = 8;
           levelUp();
-        } else if (score > 159 && score < 191) {
+        } else if (score > 1599 && score < 1900) {
           level = 9;
           levelUp();
-        } else if (score > 199 && score < 211) {
+        } else if (score > 1999 && score < 2100) {
           level = 10;
           levelUp();
         }
