@@ -83,6 +83,7 @@ div.taken {
   padding: 5px;
   background: whitesmoke;
   box-shadow: 0 0 0 5px rgba(245, 243, 243, 0.8); */
+  height: 182px;
   padding: 5px;
   outline: 8px ridge rgb(100, 255, 53);
   background: whitesmoke;
@@ -232,9 +233,9 @@ div.taken {
 }
 
 .mini-grid {
-  margin-left: 50px;
+  margin-left: 20px;
   width: 140px;
-  height: 320px;
+  height: 352px;
   display: flex;
   flex-wrap: wrap;
   background-color: whitesmoke;
